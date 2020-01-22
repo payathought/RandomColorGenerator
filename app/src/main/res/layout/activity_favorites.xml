@@ -5,10 +5,47 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context=".View.FavoritesActivity">
+		tools:context=".View.FavoritesActivity"
+		android:background="#eee"
+		android:padding="5dp"
+		>
+
+	<ImageButton
+			android:id="@+id/btnBack"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			android:src="@drawable/ic_arrow_back_black_24dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.013"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+	<TextView
+			android:id="@+id/textView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Favorites"
+			android:textAllCaps="true"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.331"
+			app:layout_constraintStart_toEndOf="@+id/btnBack"
+			app:layout_constraintTop_toTopOf="@+id/btnBack" />
+
 	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/parent_rv"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:paddingBottom="50dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.444"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView">
+
 
 	</androidx.recyclerview.widget.RecyclerView>
 

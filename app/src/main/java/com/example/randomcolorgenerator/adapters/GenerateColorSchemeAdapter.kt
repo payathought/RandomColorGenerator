@@ -11,11 +11,11 @@ import com.example.randomcolorgenerator.R
 import kotlinx.android.synthetic.main.item_layout_recycler_view_color_scheme.view.*
 
 
-class GenerateColorSchemeAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>()
+class GenerateColorSchemeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     private  var colorHexItems : ArrayList<String> = ArrayList()
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
         return ViewHolder(
             LayoutInflater.from(p0.context).inflate(R.layout.item_layout_recycler_view_color_scheme,p0,false)
         )
@@ -34,7 +34,7 @@ class GenerateColorSchemeAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         colorHexItems = colorHexItemsList
     }
 
-    override fun onBindViewHolder(holder : androidx.recyclerview.widget.RecyclerView.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(holder : RecyclerView.ViewHolder, p1: Int) {
 
         when(holder)
         {
@@ -47,7 +47,7 @@ class GenerateColorSchemeAdapter : androidx.recyclerview.widget.RecyclerView.Ada
     }
 
     class ViewHolder constructor(itemView: View )
-        : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView){
+        : RecyclerView.ViewHolder(itemView){
         val circle_color : androidx.cardview.widget.CardView = itemView.rv_card_color
 
 

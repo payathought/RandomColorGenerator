@@ -34,15 +34,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btn_addfavorite.isEnabled = false
-       val  db = ColorGeneratorDatabase(this)
-        rv_color_scheme.layoutManager =
-            LinearLayoutManager(
-                this,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
+        val  db = ColorGeneratorDatabase(this)
+        rv_color_scheme.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         generateColorSchemeAdapter = GenerateColorSchemeAdapter()
-
         btn_Favorites.setOnClickListener{ startActivity(Intent(this, FavoritesActivity::class.java)) }
         btn_generate.setOnClickListener { loadDestination() }
         btn_addfavorite.setOnClickListener { saveToLocalDatabase(db)}
@@ -53,26 +47,22 @@ class MainActivity : AppCompatActivity() {
     {
 
         val apiClient : APIClient = ServiceBuilder.buildService(APIClient::class.java)
-       val results : Call<ColorSchemeModel> =  apiClient.getResult()
+        val results : Call<ColorSchemeModel> =  apiClient.getResult()
         results.enqueue(object : Callback<ColorSchemeModel> {
             override fun onFailure(call: Call<ColorSchemeModel>, t: Throwable) {
                 Log.d(TAG,"Results not found: \n " + t.message)
 
             }
 
-            override fun onResponse(call: Call<ColorSchemeModel>, response: Response<ColorSchemeModel>) {
+            override fun onResponse(call: Call<ColorSchemeModel>, response: Response<ColorSchemeModel>)
+            {
                 if (response.isSuccessful)
                 {
+                    var i = 0
                     colors.clear()
                     color_hex_values = ""
                     val colorSchemeModelList : ColorSchemeModel? = response.body()
                     Log.d(TAG,"Result $colorSchemeModelList")
-
-
-
-
-                    var i = 0
-
                     if (colorSchemeModelList?.component1()?.get(0)?.colors?.size != 0 &&  colorSchemeModelList?.component1()?.get(0)!!.tags[0].name.isNotEmpty())
                     {
                         scheme_name.setText(colorSchemeModelList?.component1()?.get(0)!!.tags[0].name)
@@ -95,25 +85,13 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG,"color_hex_values "  + color_hex_values )
                         btn_addfavorite.setBackgroundResource(R.drawable.bitmap_heart_button_colored)
                     }else
-                    {
-                        Toast.makeText(this@MainActivity, "No Colors generated.", Toast.LENGTH_SHORT).show()
-                    }
+                    { Toast.makeText(this@MainActivity, "No Colors generated.", Toast.LENGTH_SHORT).show()}
 
                     generateColorSchemeAdapter.submitList(colors)
                     rv_color_scheme.adapter = generateColorSchemeAdapter
-
-
-
-
                     Log.d(TAG,"Index 0 -> " + colorSchemeModelList)
-
-
                 }else
-                {
-                    Log.d(TAG,"Results not found")
-
-                }
-                 //To change body of created functions use File | Settings | File Templates.
+                { Log.d(TAG,"Results not found") }
             }
 
         })
@@ -144,8 +122,6 @@ class MainActivity : AppCompatActivity() {
         btn_addfavorite.setBackgroundResource(R.drawable.bitmap_heart_image_button)
         scheme_name.setText("SCHEME COLOR")
 
-
     }
-
 
 }

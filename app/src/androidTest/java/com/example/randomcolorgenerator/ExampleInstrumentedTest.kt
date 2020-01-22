@@ -1,5 +1,7 @@
 package com.example.randomcolorgenerator
 
+
+import androidx.test.InstrumentationRegistry.getTargetContext
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -18,7 +20,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.randomcolorgenerator", appContext.packageName)
     }
 }
