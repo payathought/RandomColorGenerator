@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RandomColorGenerator</string>
+	<string name="app_name">RandomColorGenerator</string>
 
-    <string name="favorite">Favorites</string>
+	<string name="favorite">Favorites</string>
 </resources>

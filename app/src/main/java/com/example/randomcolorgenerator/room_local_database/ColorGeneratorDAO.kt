@@ -8,8 +8,8 @@ interface ColorGeneratorDAO {
     fun getAllFromSchemeNameList(): List<ColorGeneratorEntities>
 
 
-//    @Query("SELECT * FROM tblSchemeNameList WHERE  schemeName_id = :id")
-//    fun findBySchemeName(id : Int) : ColorHexEntities
+    @Query("SELECT * FROM tblSchemeNameList WHERE  schemeName_id = :id")
+    fun findByPrimaryKey(id : Int) : ColorGeneratorEntities
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

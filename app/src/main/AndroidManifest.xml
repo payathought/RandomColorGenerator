@@ -7,22 +7,21 @@
 
     <application
             android:allowBackup="true"
+            android:hardwareAccelerated="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            android:hardwareAccelerated="false"
             android:largeHeap="true"
             android:networkSecurityConfig="@xml/webservice"
-            >
-        <activity android:name=".View.FavoritesActivity">
-        </activity>
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name=".View.ShcemeNameActivity"></activity>
+        <activity android:name=".View.FavoritesActivity"></activity>
         <activity android:name=".View.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

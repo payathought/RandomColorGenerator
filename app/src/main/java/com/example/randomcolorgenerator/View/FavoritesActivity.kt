@@ -15,9 +15,10 @@ class FavoritesActivity : AppCompatActivity() {
     val TAG = "FavoritesActivity"
     lateinit var parentRecyclerViewAdapter: ParentRecyclerViewAdapter
 
-    var childList : ArrayList<ChildRvModel> = ArrayList()
+    lateinit var childList : ArrayList<ChildRvModel>
     var hexList: ArrayList<String> = ArrayList()
     var  name : String = ""
+    var primaID : Int = 0
     lateinit var childRvModel : ChildRvModel
 
 
@@ -38,32 +39,40 @@ class FavoritesActivity : AppCompatActivity() {
     private fun loadFromDatabase(dbSave : ColorGeneratorDatabase)
     {
         val data = dbSave.colorGenDao().getAllFromSchemeNameList()
-        var hexList1: ArrayList<String> = ArrayList()
+
         var hex: ArrayList<String>
+        childList = ArrayList()
+
+        var i = 1
+
+        while(i <= data.size)
+        {
+            var hexList1: ArrayList<String> = ArrayList()
+            val dataPrimary =  dbSave.colorGenDao().findByPrimaryKey(i)
+            val hexPrimary: ArrayList<String> =  dataPrimary.hex_value?.split("/") as ArrayList<String>
+            name  = dataPrimary.schemeName.toString()
+            primaID = dataPrimary.schemeName_id
+
+            Log.d(TAG,"ID -> ${dataPrimary.schemeName_id} Name -> ${dataPrimary.schemeName} ")
+
+            var x = 0
+            while (x < hexPrimary.size){
+                hexList1.add(hexPrimary[x])
+                x++
+            }
+            hexList = hexList1
+            childRvModel = ChildRvModel(scheme_name = name, hexList = hexList, primaId = primaID)
+            childList.add(childRvModel)
+            i++
+
+        }
+
+        parentRecyclerViewAdapter.submitList(context = applicationContext,childItem = childList)
+        parentRecyclerViewAdapter.notifyDataSetChanged()
+        parent_rv.adapter = parentRecyclerViewAdapter
 
 
-//        var i = 0
-//        while (i < data.size){
-//            var hexList: ArrayList<String> = ArrayList()
-//            hex = data[i].hex_value?.split("/") as ArrayList<String>
-//            name  = data[i].schemeName.toString()
-//
-//            var x = 0
-//            while (x < hex.size){
-//                hexList1.add(hex[x])
-//                x++
-//
-//            }
-//
-//            hexList = hexList1
-//            childRvModel = ChildRvModel(scheme_name = name, hexList = hexList )
-//            childList.add(childRvModel)
-//            i++
-//        }
-
-
-
-
+/*
         data.forEach {
 
             Log.d(TAG, "Database data -> ${it.schemeName} -> ${it.schemeName_id} -> ${it.hex_value}" )
@@ -86,8 +95,7 @@ class FavoritesActivity : AppCompatActivity() {
         parentRecyclerViewAdapter.notifyDataSetChanged()
         parent_rv.adapter = parentRecyclerViewAdapter
 
-
-
+ */
 
     }
 
