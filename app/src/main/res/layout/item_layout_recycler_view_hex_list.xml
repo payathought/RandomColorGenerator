@@ -4,14 +4,13 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
-
 		android:orientation="vertical"
 
 		>
 
 	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:padding="5dp"
 			>
 		<androidx.cardview.widget.CardView
@@ -28,17 +27,16 @@
 
 		<TextView
 				android:id="@+id/txt_hex_value"
-				android:layout_gravity="center_vertical"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:text="#HEX VALUE"
-				android:textAlignment="center"
 				android:textAllCaps="true"
 				android:textColor="#000"
-				android:layout_marginLeft="20dp"
 				android:textSize="20sp"
 				android:textStyle="bold"
-				android:layout_marginStart="20dp" />
+
+				 />
 	</LinearLayout>
 
 

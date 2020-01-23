@@ -42,13 +42,19 @@ class ParentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 Log.d(TAG, "Onbindview has been called ${childItemList[position].primaId}" )
 
 
-                holder.parent_layout_id
-                    .setOnClickListener {
-                        val i = Intent(parentContext, ShcemeNameActivity::class.java)
-                        val primaryID : Int = childItemList[position].primaId
-                        i.putExtra("id", primaryID)
-                        parentContext.startActivity(i)
-                    }
+//                holder.parent_layout_id
+//                    .setOnClickListener {
+//                        val i = Intent(parentContext, ShcemeNameActivity::class.java)
+//                        val primaryID : Int = childItemList[position].primaId
+//                        i.putExtra("id", primaryID)
+//                        parentContext.startActivity(i)
+//                    }
+                holder.itemView.setOnClickListener {
+                    val i = Intent(parentContext, ShcemeNameActivity::class.java)
+                    val primaryID : Int = childItemList[position].primaId
+                    i.putExtra("id", primaryID)
+                    parentContext.startActivity(i)
+                }
 
             }
         }

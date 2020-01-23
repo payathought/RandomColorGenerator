@@ -26,15 +26,15 @@ class ShcemeNameActivity : AppCompatActivity() {
         }
     }
 
-    fun loadFromDB(dbSave : ColorGeneratorDatabase, primayId : Int)
+    private fun loadFromDB(dbSave : ColorGeneratorDatabase, primayId : Int)
     {
         var hexList1: ArrayList<String> = ArrayList()
         val data = dbSave.colorGenDao().findByPrimaryKey(primayId)
-        val hexPrimary: ArrayList<String> =  data.hex_value?.split("/") as ArrayList<String>
+        val hexPrimary =  data.hex_value?.split("/")
         val name = data.schemeName
         txtSchemeName_last.setText(name)
         var x = 0
-        while (x < hexPrimary.size){
+        while (x < hexPrimary!!.size){
             hexList1.add(hexPrimary[x])
             x++
         }

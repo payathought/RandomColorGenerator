@@ -1,5 +1,6 @@
 package com.example.randomcolorgenerator.room_local_database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -21,7 +22,8 @@ interface ColorGeneratorDAO {
     fun updateTodo(vararg todos : ColorGeneratorEntities)
 
 
-
+    @Query("SELECT * FROM tblSchemeNameList")
+    fun getAllFromSchemeNameListLiveData(): LiveData<List<ColorGeneratorEntities>>
 
 }
 

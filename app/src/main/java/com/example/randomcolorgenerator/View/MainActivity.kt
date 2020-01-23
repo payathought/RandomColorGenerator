@@ -1,26 +1,28 @@
 package com.example.randomcolorgenerator.View
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.provider.Settings
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.randomcolorgenerator.R
 import com.example.randomcolorgenerator.adapters.GenerateColorSchemeAdapter
 import com.example.randomcolorgenerator.interfaces.APIClient
-import com.example.randomcolorgenerator.remoteService.ServiceBuilder
 import com.example.randomcolorgenerator.model.ColorSchemeModel
+import com.example.randomcolorgenerator.remoteService.ServiceBuilder
 import com.example.randomcolorgenerator.room_local_database.ColorGeneratorDatabase
 import com.example.randomcolorgenerator.room_local_database.ColorGeneratorEntities
-
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +40,21 @@ class MainActivity : AppCompatActivity() {
         rv_color_scheme.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         generateColorSchemeAdapter = GenerateColorSchemeAdapter()
         btn_Favorites.setOnClickListener{ startActivity(Intent(this, FavoritesActivity::class.java)) }
-        btn_generate.setOnClickListener { loadDestination() }
+        btn_generate.setOnClickListener {
+            if (haveNetworkConnected())
+            {
+                loadDestination()
+            }else if(!haveNetworkConnected())
+            {
+                val snackbar = Snackbar
+                    .make(it, "Please, Check Internet connection.", Snackbar.LENGTH_LONG)
+                snackbar.show()
+            }
+
+
+
+
+        }
         btn_addfavorite.setOnClickListener { saveToLocalDatabase(db)}
 
     }
@@ -63,27 +79,33 @@ class MainActivity : AppCompatActivity() {
                     color_hex_values = ""
                     val colorSchemeModelList : ColorSchemeModel? = response.body()
                     Log.d(TAG,"Result $colorSchemeModelList")
+
+
                     if (colorSchemeModelList?.component1()?.get(0)?.colors?.size != 0 &&  colorSchemeModelList?.component1()?.get(0)!!.tags[0].name.isNotEmpty())
                     {
-                        scheme_name.setText(colorSchemeModelList?.component1()?.get(0)!!.tags[0].name)
-                        while (i < colorSchemeModelList?.component1()?.get(0)?.colors!!.size)
+                        if (colorSchemeModelList?.component1()?.get(0)?.colors?.size != 0)
                         {
-                            colorRes  = colorSchemeModelList.component1()[0].colors[i]
-                            Log.d(TAG,"Result of Component 1 "  + colorRes )
-
-                            colors.add(colorRes)
-
-                            if (i == 0)
+                            scheme_name.setText(colorSchemeModelList.component1().get(0).tags[0].name)
+                            while (i < colorSchemeModelList.component1().get(0).colors.size)
                             {
-                                color_hex_values = colorRes
-                            }else{
-                                color_hex_values += "/$colorRes"
+                                colorRes  = colorSchemeModelList.component1()[0].colors[i]
+                                Log.d(TAG,"Result of Component 1 "  + colorRes )
+
+                                colors.add(colorRes)
+
+                                if (i == 0)
+                                {
+                                    color_hex_values = colorRes
+                                }else{
+                                    color_hex_values += "/$colorRes"
+                                }
+                                i++
                             }
-                            i++
-                                                    }
-                        btn_addfavorite.isEnabled = true
-                        Log.d(TAG,"color_hex_values "  + color_hex_values )
-                        btn_addfavorite.setBackgroundResource(R.drawable.bitmap_heart_button_colored)
+                            btn_addfavorite.isEnabled = true
+                            Log.d(TAG,"color_hex_values "  + color_hex_values )
+                            btn_addfavorite.setBackgroundResource(R.drawable.bitmap_heart_button_colored)
+                        }
+
                     }else
                     { Toast.makeText(this@MainActivity, "No Colors generated.", Toast.LENGTH_SHORT).show()}
 
@@ -123,5 +145,26 @@ class MainActivity : AppCompatActivity() {
         scheme_name.setText("SCHEME COLOR")
 
     }
+
+    private fun haveNetworkConnected(): Boolean {
+        var have_WIFI = false
+        var have_MobileData = false
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfos = connectivityManager.allNetworkInfo
+        for (info in networkInfos) {
+            if (info.typeName
+                    .equals("WIFI", ignoreCase = true)
+            ) if (info.isConnected) have_WIFI = true
+            if (info.typeName
+                    .equals("MOBILE", ignoreCase = true)
+            ) if (info.isConnected) have_MobileData = true
+        }
+        return have_MobileData || have_WIFI
+    }
+
+
+
+
 
 }

@@ -49,14 +49,14 @@ class FavoritesActivity : AppCompatActivity() {
         {
             var hexList1: ArrayList<String> = ArrayList()
             val dataPrimary =  dbSave.colorGenDao().findByPrimaryKey(i)
-            val hexPrimary: ArrayList<String> =  dataPrimary.hex_value?.split("/") as ArrayList<String>
+            val hexPrimary =  dataPrimary.hex_value?.split("/")
             name  = dataPrimary.schemeName.toString()
             primaID = dataPrimary.schemeName_id
 
             Log.d(TAG,"ID -> ${dataPrimary.schemeName_id} Name -> ${dataPrimary.schemeName} ")
 
             var x = 0
-            while (x < hexPrimary.size){
+            while (x < hexPrimary!!.size){
                 hexList1.add(hexPrimary[x])
                 x++
             }
